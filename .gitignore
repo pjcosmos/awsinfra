@@ -1,0 +1,13 @@
+.terraform/
+.gradle/
+build/
+*.exe
+.terraform/
+.gradle/
+build/
+*.exe
+.terraform/
+.gradle/
+build/
+*.exe
+node_modules/
