@@ -45,8 +45,7 @@ spec:
       containers:
         - name: backend
           # [수정됨] v3용 ECR 백엔드 주소
-          image: 805400277714.dkr.ecr.ap-northeast-2.amazonaws.com/sample-app-v3/backend:latest
-          imagePullPolicy: Always
+          image: 805400277714.dkr.ecr.ap-northeast-2.amazonaws.com/sample-app-v3/backend:v3          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
