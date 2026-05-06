@@ -4,7 +4,6 @@ metadata:
   name: backend-sa
   namespace: sample-app
   annotations:
-    # [수정됨] v3용 backend-sa-role ARN
     eks.amazonaws.com/role-arn: arn:aws:iam::805400277714:role/sample-app-v3-backend-sa-role
 ---
 apiVersion: v1
@@ -14,12 +13,10 @@ metadata:
   namespace: sample-app
 type: Opaque
 stringData:
-  # [수정됨] v3용 S3 버킷 이름
   S3_BUCKET_NAME: "sample-app-v3-files-805400277714-v2"
-  # [수정됨] v3용 RDS 엔드포인트 주소
   DB_URL: "jdbc:mysql://sample-app-v3-mysql.c18y4gs8uo61.ap-northeast-2.rds.amazonaws.com:3306/mydb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8"
   DB_USERNAME: "admin"
-  DB_PASSWORD: "cosmos09" # 설정하신 비밀번호
+  DB_PASSWORD: "cosmos09"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,11 +28,6 @@ spec:
   selector:
     matchLabels:
       app: backend
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
   template:
     metadata:
       labels:
@@ -44,8 +36,9 @@ spec:
       serviceAccountName: backend-sa
       containers:
         - name: backend
-          # [수정됨] v3용 ECR 백엔드 주소
-          image: 805400277714.dkr.ecr.ap-northeast-2.amazonaws.com/sample-app-v3/backend:v3          imagePullPolicy: Always
+          # 이미지 태그를 v3로 변경했습니다.
+          image: 805400277714.dkr.ecr.ap-northeast-2.amazonaws.com/sample-app-v3/backend:v3
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
@@ -69,24 +62,21 @@ spec:
                 secretKeyRef:
                   name: backend-secret
                   key: DB_PASSWORD
-            # --- 여기에 용량 제한 설정만 추가되었습니다 ---
+            # 들여쓰기를 정확히 맞춘 추가 설정들입니다.
             - name: SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE
               value: "10MB"
             - name: SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE
               value: "10MB"
-            # ------------------------------------------
           readinessProbe:
             httpGet:
               path: /health
               port: 8080
             initialDelaySeconds: 30
-            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /health
               port: 8080
             initialDelaySeconds: 60
-            periodSeconds: 30
           resources:
             requests:
               memory: "256Mi"
