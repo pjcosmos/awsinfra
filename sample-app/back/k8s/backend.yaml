@@ -19,7 +19,7 @@ stringData:
   # [수정됨] v3용 RDS 엔드포인트 주소
   DB_URL: "jdbc:mysql://sample-app-v3-mysql.c18y4gs8uo61.ap-northeast-2.rds.amazonaws.com:3306/mydb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8"
   DB_USERNAME: "admin"
-  DB_PASSWORD: "welabs2026!" # 설정하신 비밀번호
+  DB_PASSWORD: "cosmos09" # 설정하신 비밀번호
 ---
 apiVersion: apps/v1
 kind: Deployment
