@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: aws-lab-backend
+  # datasource:
+  #   url: ${DB_URL:jdbc:mysql://localhost:3306/mydb?serverTimezone=Asia/Seoul&characterEncoding=UTF-8}
+  #   username: ${DB_USERNAME:admin}
+  #   password: ${DB_PASSWORD:admin}
+  #   driver-class-name: com.mysql.cj.jdbc.Driver
+  # jpa:
+  #   hibernate:
+  #     ddl-auto: update
+  #   show-sql: true
+  #   properties:
+  #     hibernate:
+  #       format_sql: true
+cloud:
+  aws:
+    region: ap-northeast-2
+    s3:
+      bucket: ${S3_BUCKET_NAME:awslab2026-bucket-test}
