@@ -70,6 +70,12 @@ spec:
                 secretKeyRef:
                   name: backend-secret
                   key: DB_PASSWORD
+            # --- 여기에 용량 제한 설정만 추가되었습니다 ---
+            - name: SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE
+              value: "10MB"
+            - name: SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE
+              value: "10MB"
+            # ------------------------------------------
           readinessProbe:
             httpGet:
               path: /health
